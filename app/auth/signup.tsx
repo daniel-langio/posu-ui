@@ -93,14 +93,21 @@ export default function SignupScreen() {
 
       if (error.name === 'AbortError') {
         message = 'Request timed out. Please try again.';
-      } else if (error instanceof TypeError && error.message === 'Failed to fetch' && Platform.OS === 'web') {
-        message = 'Network Error: This might be a CORS issue. If you are testing on web, ensure the server allows requests from this origin.';
+      } else if (Platform.OS === 'web' && (
+        error.name === 'TypeError' ||
+        error.message === 'Failed to fetch' ||
+        error.message?.includes('NetworkError') ||
+        error.message?.includes('fetch')
+      )) {
+        message = 'Network Error: Likely a CORS issue. Browsers block cross-origin requests from localhost to ' + API_BASE_URL + ' unless the server is configured to allow it.';
       } else if (error instanceof Error) {
         message = error.message;
       }
 
       setErrorMessage(message);
-      Alert.alert('Sign Up Error', message);
+      if (Platform.OS !== 'web') {
+        Alert.alert('Sign Up Error', message);
+      }
     } finally {
       clearTimeout(timeoutId);
       setIsLoading(false);
@@ -176,6 +183,7 @@ export default function SignupScreen() {
           style={StyleSheet.flatten([styles.button, { backgroundColor: colors.tint }])}
           onPress={handleSubmit(onSubmit)}
           disabled={isLoading}
+          accessibilityRole="button"
         >
           {isLoading ? (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
@@ -190,7 +198,7 @@ export default function SignupScreen() {
         <View style={styles.footer}>
           <Text style={{ color: colors.text }}>Already have an account? </Text>
           <Link href="/auth/signin" asChild>
-            <TouchableOpacity>
+            <TouchableOpacity accessibilityRole="link">
               <Text style={StyleSheet.flatten([styles.link, { color: colors.tint }])}>Sign In</Text>
             </TouchableOpacity>
           </Link>
