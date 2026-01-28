@@ -19,6 +19,7 @@ type FormData = z.infer<typeof schema>;
 
 export default function SignupScreen() {
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const router = useRouter();
   const { signIn } = useAuth();
   const colorScheme = useColorScheme() ?? 'light';
@@ -39,6 +40,7 @@ export default function SignupScreen() {
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
+    setErrorMessage(null);
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
@@ -75,10 +77,11 @@ export default function SignupScreen() {
       }
 
       const userToSave = result.username || data.username;
+      console.log('Saving session for:', userToSave);
       await signIn(userToSave, result.apiKey);
 
-      console.log('Session saved, redirecting...');
-      router.replace('/(tabs)');
+      console.log('Session saved, redirecting to home...');
+      router.replace('/');
 
       if (Platform.OS !== 'web') {
         Alert.alert('Success', 'Account created successfully!');
@@ -91,6 +94,7 @@ export default function SignupScreen() {
       } else if (error instanceof Error) {
         message = error.message;
       }
+      setErrorMessage(message);
       Alert.alert('Sign Up Error', message);
     } finally {
       clearTimeout(timeoutId);
@@ -103,6 +107,11 @@ export default function SignupScreen() {
       <Text style={StyleSheet.flatten([styles.title, { color: colors.text }])}>Sign Up</Text>
 
       <View style={styles.form}>
+        {errorMessage && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorContainerText}>{errorMessage}</Text>
+          </View>
+        )}
         <Text style={StyleSheet.flatten([styles.label, { color: colors.text }])}>Username</Text>
         <Controller
           control={control}
@@ -164,7 +173,10 @@ export default function SignupScreen() {
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color={colors.background} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+              <ActivityIndicator color={colors.background} />
+              <Text style={StyleSheet.flatten([styles.buttonText, { color: colors.background }])}>Signing Up...</Text>
+            </View>
           ) : (
             <Text style={StyleSheet.flatten([styles.buttonText, { color: colors.background }])}>Sign Up</Text>
           )}
@@ -213,6 +225,19 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     marginTop: -10,
+  },
+  errorContainer: {
+    backgroundColor: '#ffebee',
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#f44336',
+    marginBottom: 10,
+  },
+  errorContainerText: {
+    color: '#d32f2f',
+    textAlign: 'center',
+    fontWeight: '500',
   },
   button: {
     borderRadius: 8,
