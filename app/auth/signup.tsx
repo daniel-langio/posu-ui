@@ -133,9 +133,9 @@ export default function SignupScreen() {
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color="#fff" />
+            <ActivityIndicator color={colors.background} />
           ) : (
-            <Text style={styles.buttonText}>Sign Up</Text>
+            <Text style={StyleSheet.flatten([styles.buttonText, { color: colors.background }])}>Sign Up</Text>
           )}
         </TouchableOpacity>
 

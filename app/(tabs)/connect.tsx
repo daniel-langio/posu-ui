@@ -17,7 +17,7 @@ export default function ConnectScreen() {
       <View style={styles.buttonContainer}>
         <Link href="/auth/signin" asChild>
           <TouchableOpacity style={StyleSheet.flatten([styles.button, { backgroundColor: colors.tint }])}>
-            <Text style={styles.buttonText}>Sign In</Text>
+            <Text style={StyleSheet.flatten([styles.buttonText, { color: colors.background }])}>Sign In</Text>
           </TouchableOpacity>
         </Link>
 
@@ -60,6 +60,5 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
   },
 });

@@ -112,9 +112,9 @@ export default function SigninScreen() {
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color="#fff" />
+            <ActivityIndicator color={colors.background} />
           ) : (
-            <Text style={styles.buttonText}>Sign In</Text>
+            <Text style={StyleSheet.flatten([styles.buttonText, { color: colors.background }])}>Sign In</Text>
           )}
         </TouchableOpacity>
 

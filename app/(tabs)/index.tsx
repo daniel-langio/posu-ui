@@ -24,7 +24,7 @@ export default function HomeScreen() {
             style={StyleSheet.flatten([styles.button, { backgroundColor: colors.tint, marginTop: 20 }])}
             onPress={signOut}
           >
-            <Text style={styles.buttonText}>Sign Out</Text>
+            <Text style={StyleSheet.flatten([styles.buttonText, { color: colors.background }])}>Sign Out</Text>
           </TouchableOpacity>
         </>
       ) : (
@@ -38,7 +38,7 @@ export default function HomeScreen() {
 
           <Link href="/auth/signin" asChild>
             <TouchableOpacity style={StyleSheet.flatten([styles.button, { backgroundColor: colors.tint, marginTop: 20 }])}>
-              <Text style={styles.buttonText}>Connect</Text>
+              <Text style={StyleSheet.flatten([styles.buttonText, { color: colors.background }])}>Connect</Text>
             </TouchableOpacity>
           </Link>
         </>

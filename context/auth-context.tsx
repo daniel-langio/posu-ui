@@ -28,7 +28,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         let username = null;
         let apiKey = null;
 
-        if (Platform.OS !== 'web' || (typeof window !== 'undefined' && window.localStorage)) {
+        if (Platform.OS === 'web') {
+          username = localStorage.getItem('username');
+          apiKey = localStorage.getItem('apiKey');
+        } else {
           username = await SecureStore.getItemAsync('username');
           apiKey = await SecureStore.getItemAsync('apiKey');
         }
@@ -47,8 +50,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (username: string, apiKey: string) => {
-    await SecureStore.setItemAsync('username', username);
-    await SecureStore.setItemAsync('apiKey', apiKey);
+    if (Platform.OS === 'web') {
+      localStorage.setItem('username', username);
+      localStorage.setItem('apiKey', apiKey);
+    } else {
+      await SecureStore.setItemAsync('username', username);
+      await SecureStore.setItemAsync('apiKey', apiKey);
+    }
     setState({
       username,
       apiKey,
@@ -57,8 +65,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
-    await SecureStore.deleteItemAsync('username');
-    await SecureStore.deleteItemAsync('apiKey');
+    if (Platform.OS === 'web') {
+      localStorage.removeItem('username');
+      localStorage.removeItem('apiKey');
+    } else {
+      await SecureStore.deleteItemAsync('username');
+      await SecureStore.deleteItemAsync('apiKey');
+    }
     setState({
       username: null,
       apiKey: null,
