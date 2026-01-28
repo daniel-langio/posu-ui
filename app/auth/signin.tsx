@@ -48,6 +48,7 @@ export default function SigninScreen() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify(data),
         signal: controller.signal,
@@ -60,7 +61,7 @@ export default function SigninScreen() {
         try {
           const errorData = await response.json();
           errorMessage = errorData.message || errorMessage;
-        } catch (_e) {
+        } catch {
           const textError = await response.text().catch(() => '');
           errorMessage = textError || `Server returned ${response.status}`;
         }
@@ -87,11 +88,15 @@ export default function SigninScreen() {
     } catch (error: any) {
       console.error('Login error:', error);
       let message = 'An unexpected error occurred';
+
       if (error.name === 'AbortError') {
         message = 'Request timed out. Please try again.';
+      } else if (error instanceof TypeError && error.message === 'Failed to fetch' && Platform.OS === 'web') {
+        message = 'Network Error: This might be a CORS issue. If you are testing on web, ensure the server allows requests from this origin.';
       } else if (error instanceof Error) {
         message = error.message;
       }
+
       setErrorMessage(message);
       Alert.alert('Sign In Error', message);
     } finally {

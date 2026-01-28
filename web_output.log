@@ -11,34 +11,13 @@ Your project may not work correctly until you install the expected versions of t
 Waiting on http://localhost:8081
 Logs for your project will appear below.
 Web node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
-λ Bundled 3338ms node_modules/expo-router/node/render.js (1134 modules)
+λ node_modules/expo-router/node/render.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Web node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 87.0% (898/963)
+λ node_modules/expo-router/node/render.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 89.0% (896/950)
+λ Bundled 4056ms node_modules/expo-router/node/render.js (1191 modules)
+λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents
 Web node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1156/1156)
-λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents
-Web Bundled 7075ms node_modules/expo-router/entry.js (1156 modules)
+Web Bundled 8338ms node_modules/expo-router/entry.js (1156 modules)
 Web node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1156/1156)
-Web Bundled 1708ms node_modules/expo-router/entry.js (1140 modules)
- LOG  [web] Logs will appear in the browser console
-Web node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
-λ Bundled 63ms node_modules/expo-router/node/render.js (1 module)
-λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents
-Web Bundled 528ms node_modules/expo-router/entry.js (1 module)
-Web Bundled 90ms node_modules/expo-router/entry.js (1 module)
- LOG  [web] Logs will appear in the browser console
-Web node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
-λ Bundled 34ms node_modules/expo-router/node/render.js (1 module)
-λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents
-Web Bundled 435ms node_modules/expo-router/entry.js (1 module)
-Web Bundled 77ms node_modules/expo-router/entry.js (1 module)
- LOG  [web] Logs will appear in the browser console
-Web node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
-λ Bundled 56ms node_modules/expo-router/node/render.js (1 module)
-λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents
-Web Bundled 525ms node_modules/expo-router/entry.js (1 module)
-Web Bundled 61ms node_modules/expo-router/entry.js (1 module)
- LOG  [web] Logs will appear in the browser console
-Web node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
-λ Bundled 57ms node_modules/expo-router/node/render.js (1 module)
-λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents
-Web Bundled 506ms node_modules/expo-router/entry.js (1 module)
-Web Bundled 79ms node_modules/expo-router/entry.js (1 module)
+Web Bundled 1721ms node_modules/expo-router/entry.js (1157 modules)
  LOG  [web] Logs will appear in the browser console
