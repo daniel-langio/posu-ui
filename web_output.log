@@ -1,0 +1,34 @@
+
+> posu-mobile@1.0.0 web
+> expo start --web
+
+Starting project at /app
+React Compiler enabled
+Starting Metro Bundler
+The following packages should be updated for best compatibility with the installed expo version:
+  expo@54.0.31 - expected version: ~54.0.32
+Your project may not work correctly until you install the expected versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Web node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+λ node_modules/expo-router/node/render.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+λ Bundled 3460ms node_modules/expo-router/node/render.js (1134 modules)
+Web node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░ 89.9% (1085/1148)
+λ node_modules/expo-router/node/render.js ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░ 84.8% ( 983/1134)
+λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents
+Web node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1156/1156)
+Web Bundled 7245ms node_modules/expo-router/entry.js (1156 modules)
+Web node_modules/expo-router/entry.js ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░ 99.9% (1156/1156)
+Web Bundled 1388ms node_modules/expo-router/entry.js (1138 modules)
+ LOG  [web] Logs will appear in the browser console
+Web node_modules/expo-router/entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+λ Bundled 36ms node_modules/expo-router/node/render.js (1 module)
+λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents
+Web Bundled 508ms node_modules/expo-router/entry.js (1 module)
+Web Bundled 88ms node_modules/expo-router/entry.js (1 module)
+ LOG  [web] Logs will appear in the browser console
+λ Bundled 40ms node_modules/expo-router/node/render.js (1 module)
+λ  WARN  props.pointerEvents is deprecated. Use style.pointerEvents
+Web Bundled 565ms node_modules/expo-router/entry.js (1 module)
+Web Bundled 57ms node_modules/expo-router/entry.js (1 module)
+ LOG  [web] Logs will appear in the browser console

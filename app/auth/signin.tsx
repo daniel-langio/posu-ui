@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, View, Text, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, View, Text, ActivityIndicator, Alert, Platform } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -37,30 +37,62 @@ export default function SigninScreen() {
 
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
+
     try {
+      console.log('Attempting login for:', data.username);
       const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Failed to sign in');
+        let errorMessage = 'Failed to sign in';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (_e) {
+          const textError = await response.text().catch(() => '');
+          errorMessage = textError || `Server returned ${response.status}`;
+        }
+        throw new Error(errorMessage);
       }
 
       const result = await response.json();
-      console.log('Login success:', result);
+      console.log('Login response received:', !!result);
 
-      await signIn(result.username, result.apiKey);
+      if (!result.apiKey) {
+        throw new Error('No API key received from server');
+      }
 
-      Alert.alert('Success', 'Signed in successfully!');
+      const userToSave = result.username || data.username;
+      await signIn(userToSave, result.apiKey);
+
+      console.log('Session saved, redirecting...');
       router.replace('/(tabs)');
+
+      // We show success alert after navigation attempt to not block it
+      if (Platform.OS !== 'web') {
+        Alert.alert('Success', 'Signed in successfully!');
+      }
     } catch (error: any) {
-      Alert.alert('Error', error.message);
+      console.error('Login error:', error);
+      let message = 'An unexpected error occurred';
+      if (error.name === 'AbortError') {
+        message = 'Request timed out. Please try again.';
+      } else if (error instanceof Error) {
+        message = error.message;
+      }
+      Alert.alert('Sign In Error', message);
     } finally {
+      clearTimeout(timeoutId);
       setIsLoading(false);
     }
   };
