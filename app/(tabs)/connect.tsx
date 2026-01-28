@@ -8,22 +8,22 @@ export default function ConnectScreen() {
   const colors = Colors[colorScheme];
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Welcome</Text>
-      <Text style={[styles.subtitle, { color: colors.text }]}>
+    <View style={StyleSheet.flatten([styles.container, { backgroundColor: colors.background }])}>
+      <Text style={StyleSheet.flatten([styles.title, { color: colors.text }])}>Welcome</Text>
+      <Text style={StyleSheet.flatten([styles.subtitle, { color: colors.text }])}>
         Please sign in or sign up to continue.
       </Text>
 
       <View style={styles.buttonContainer}>
         <Link href="/auth/signin" asChild>
-          <TouchableOpacity style={[styles.button, { backgroundColor: colors.tint }]}>
+          <TouchableOpacity style={StyleSheet.flatten([styles.button, { backgroundColor: colors.tint }])}>
             <Text style={styles.buttonText}>Sign In</Text>
           </TouchableOpacity>
         </Link>
 
         <Link href="/auth/signup" asChild>
-          <TouchableOpacity style={[styles.button, { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.tint }]}>
-            <Text style={[styles.buttonText, { color: colors.tint }]}>Sign Up</Text>
+          <TouchableOpacity style={StyleSheet.flatten([styles.button, { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.tint }])}>
+            <Text style={StyleSheet.flatten([styles.buttonText, { color: colors.tint }])}>Sign Up</Text>
           </TouchableOpacity>
         </Link>
       </View>

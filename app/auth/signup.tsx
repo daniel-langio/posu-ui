@@ -64,17 +64,17 @@ export default function SignupScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Sign Up</Text>
+    <View style={StyleSheet.flatten([styles.container, { backgroundColor: colors.background }])}>
+      <Text style={StyleSheet.flatten([styles.title, { color: colors.text }])}>Sign Up</Text>
 
       <View style={styles.form}>
-        <Text style={[styles.label, { color: colors.text }]}>Username</Text>
+        <Text style={StyleSheet.flatten([styles.label, { color: colors.text }])}>Username</Text>
         <Controller
           control={control}
           name="username"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={[styles.input, { color: colors.text, borderColor: colors.icon }]}
+              style={StyleSheet.flatten([styles.input, { color: colors.text, borderColor: colors.icon }])}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -86,13 +86,13 @@ export default function SignupScreen() {
         />
         {errors.username && <Text style={styles.errorText}>{errors.username.message}</Text>}
 
-        <Text style={[styles.label, { color: colors.text }]}>Email</Text>
+        <Text style={StyleSheet.flatten([styles.label, { color: colors.text }])}>Email</Text>
         <Controller
           control={control}
           name="email"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={[styles.input, { color: colors.text, borderColor: colors.icon }]}
+              style={StyleSheet.flatten([styles.input, { color: colors.text, borderColor: colors.icon }])}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -105,13 +105,13 @@ export default function SignupScreen() {
         />
         {errors.email && <Text style={styles.errorText}>{errors.email.message}</Text>}
 
-        <Text style={[styles.label, { color: colors.text }]}>Password</Text>
+        <Text style={StyleSheet.flatten([styles.label, { color: colors.text }])}>Password</Text>
         <Controller
           control={control}
           name="password"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={[styles.input, { color: colors.text, borderColor: colors.icon }]}
+              style={StyleSheet.flatten([styles.input, { color: colors.text, borderColor: colors.icon }])}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -124,7 +124,7 @@ export default function SignupScreen() {
         {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
 
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: colors.tint }]}
+          style={StyleSheet.flatten([styles.button, { backgroundColor: colors.tint }])}
           onPress={handleSubmit(onSubmit)}
           disabled={isLoading}
         >
@@ -139,7 +139,7 @@ export default function SignupScreen() {
           <Text style={{ color: colors.text }}>Already have an account? </Text>
           <Link href="/auth/signin" asChild>
             <TouchableOpacity>
-              <Text style={[styles.link, { color: colors.tint }]}>Sign In</Text>
+              <Text style={StyleSheet.flatten([styles.link, { color: colors.tint }])}>Sign In</Text>
             </TouchableOpacity>
           </Link>
         </View>

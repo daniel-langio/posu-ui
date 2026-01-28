@@ -62,17 +62,17 @@ export default function SigninScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Sign In</Text>
+    <View style={StyleSheet.flatten([styles.container, { backgroundColor: colors.background }])}>
+      <Text style={StyleSheet.flatten([styles.title, { color: colors.text }])}>Sign In</Text>
 
       <View style={styles.form}>
-        <Text style={[styles.label, { color: colors.text }]}>Username</Text>
+        <Text style={StyleSheet.flatten([styles.label, { color: colors.text }])}>Username</Text>
         <Controller
           control={control}
           name="username"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={[styles.input, { color: colors.text, borderColor: colors.icon }]}
+              style={StyleSheet.flatten([styles.input, { color: colors.text, borderColor: colors.icon }])}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -84,13 +84,13 @@ export default function SigninScreen() {
         />
         {errors.username && <Text style={styles.errorText}>{errors.username.message}</Text>}
 
-        <Text style={[styles.label, { color: colors.text }]}>Password</Text>
+        <Text style={StyleSheet.flatten([styles.label, { color: colors.text }])}>Password</Text>
         <Controller
           control={control}
           name="password"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={[styles.input, { color: colors.text, borderColor: colors.icon }]}
+              style={StyleSheet.flatten([styles.input, { color: colors.text, borderColor: colors.icon }])}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -103,7 +103,7 @@ export default function SigninScreen() {
         {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
 
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: colors.tint }]}
+          style={StyleSheet.flatten([styles.button, { backgroundColor: colors.tint }])}
           onPress={handleSubmit(onSubmit)}
           disabled={isLoading}
         >
@@ -118,7 +118,7 @@ export default function SigninScreen() {
           <Text style={{ color: colors.text }}>{"Don't have an account? "}</Text>
           <Link href="/auth/signup" asChild>
             <TouchableOpacity>
-              <Text style={[styles.link, { color: colors.tint }]}>Sign Up</Text>
+              <Text style={StyleSheet.flatten([styles.link, { color: colors.tint }])}>Sign Up</Text>
             </TouchableOpacity>
           </Link>
         </View>
