@@ -7,6 +7,7 @@ import { Link, useRouter } from 'expo-router';
 import { API_BASE_URL } from '@/constants/api';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useAuth } from '@/context/auth-context';
 
 const schema = z.object({
   username: z.string().min(3, 'Username must be at least 3 characters'),
@@ -19,6 +20,7 @@ type FormData = z.infer<typeof schema>;
 export default function SignupScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { signIn } = useAuth();
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
 
@@ -53,7 +55,9 @@ export default function SignupScreen() {
 
       const result = await response.json();
       console.log('Registration success:', result);
-      // In a real app, you would save the API key here
+
+      await signIn(result.username, result.apiKey);
+
       Alert.alert('Success', 'Account created successfully!');
       router.replace('/(tabs)');
     } catch (error: any) {
