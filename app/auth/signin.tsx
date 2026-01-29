@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Link, useRouter } from 'expo-router';
-import { API_BASE_URL } from '@/constants/api';
+import { getApiUrl, API_BASE_URL } from '@/constants/api';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useAuth } from '@/context/auth-context';
@@ -19,6 +19,8 @@ type FormData = z.infer<typeof schema>;
 export default function SigninScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [useProxy, setUseProxy] = useState(false);
+  const [showProxyOption, setShowProxyOption] = useState(false);
   const router = useRouter();
   const { signIn } = useAuth();
   const colorScheme = useColorScheme() ?? 'light';
@@ -36,15 +38,18 @@ export default function SigninScreen() {
     },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormData, forceProxy: boolean = false) => {
     setIsLoading(true);
     setErrorMessage(null);
+    setShowProxyOption(false);
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
+    const effectiveProxy = forceProxy || useProxy;
+
     try {
-      console.log('Attempting login for:', data.username);
-      const response = await fetch(`${API_BASE_URL}/login`, {
+      console.log(`Attempting login for: ${data.username} (Proxy: ${effectiveProxy})`);
+      const response = await fetch(getApiUrl('/login', effectiveProxy), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,6 +103,7 @@ export default function SigninScreen() {
         error.message?.includes('fetch')
       )) {
         message = 'Network Error: Likely a CORS issue. Browsers block cross-origin requests from localhost to ' + API_BASE_URL + ' unless the server is configured to allow it.';
+        if (!effectiveProxy) setShowProxyOption(true);
       } else if (error instanceof Error) {
         message = error.message;
       }
@@ -120,6 +126,18 @@ export default function SigninScreen() {
         {errorMessage && (
           <View style={styles.errorContainer}>
             <Text style={styles.errorContainerText}>{errorMessage}</Text>
+            {showProxyOption && (
+              <TouchableOpacity
+                style={styles.proxyButton}
+                onPress={() => {
+                  setUseProxy(true);
+                  handleSubmit((data) => onSubmit(data, true))();
+                }}
+                accessibilityRole="button"
+              >
+                <Text style={styles.proxyButtonText}>Try with CORS Proxy</Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
         <Text style={StyleSheet.flatten([styles.label, { color: colors.text }])}>Username</Text>
@@ -230,6 +248,18 @@ const styles = StyleSheet.create({
     color: '#d32f2f',
     textAlign: 'center',
     fontWeight: '500',
+  },
+  proxyButton: {
+    marginTop: 10,
+    backgroundColor: '#d32f2f',
+    padding: 8,
+    borderRadius: 4,
+    alignSelf: 'center',
+  },
+  proxyButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   button: {
     borderRadius: 8,
